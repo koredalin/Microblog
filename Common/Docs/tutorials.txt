@@ -1,0 +1,29 @@
+-- Slim 3 Documentation
+https://www.slimframework.com/docs/v3/
+
+-- Slim 4 Directory structure
+https://odan.github.io/slim4-skeleton/directory-structure.html
+
+
+----- PHP Login and Registration RESTful API -----
+https://www.w3jar.com/php-login-and-registration-restful-api/
+
+----- How to Create PHP CRUD RESTful API in Easy Way? -----
+https://www.w3jar.com/crud-rest-api-in-php-pdo/
+
+
+### Not used sources. ###
+
+--- No.
+-- Build a Simple REST API in PHP. OAuth2 - Too complicated.
+https://developer.okta.com/blog/2019/03/08/simple-rest-api-php
+
+
+--- No.
+-- How to Build a Simple REST API in PHP. No authentication.
+https://code.tutsplus.com/tutorials/how-to-build-a-simple-rest-api-in-php--cms-37000
+
+
+--- No.
+-- REST API Authentication Example in PHP – JWT Tutorial. Too complicated.
+https://codeofaninja.com/2018/09/rest-api-authentication-example-php-jwt-tutorial.html#Download_LEVEL_1_source_code

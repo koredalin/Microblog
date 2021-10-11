@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Services\Repositories\Interfaces;
+
+use App\Models\User;
+use App\Models\Post;
+use App\Controllers\Input\Forms\BlogPostForm;
+
+/**
+ *
+ * @author Hristo
+ */
+interface PostRepositoryInterface
+{
+    public function create(BlogPostForm $input, User $user): Post;
+    
+    public function getById(int $id): ?Post;
+    
+    public function getByUserIdTitle(int $userId, string $title): ?Post;
+    
+    /**
+     * 
+     * @return array Post[]
+     */
+    public function getAllOrderById(): array;
+    
+    public function update(Post $post): Post;
+    
+    public function delete(Post $post): void;
+}

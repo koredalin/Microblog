@@ -1,0 +1,17 @@
+12.X.2021
+
+1.) Creating Auth API by https://developer.okta.com/blog/2019/03/08/simple-rest-api-php tutorial.
+
+10:00 Breakfast
+
+2.) Project Entities.
+
+3.) Container setup.
+
+4.) DB setup.
+
+13:00 Lunch
+
+5.) Adding the API to my project.
+
+6.) Codeseption functional tests of the API.

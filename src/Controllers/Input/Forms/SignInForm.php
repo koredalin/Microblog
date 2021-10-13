@@ -15,14 +15,28 @@ class SignInForm
     const PASSWORD_MIN_SYMBOLS = 4;
     const PASSWORD_MAX_SYMBOLS = 20;
     
-    public string $email;
-    public string $password;
+    protected string $email;
+    protected string $password;
+    
+    protected function __construct()
+    {
+    }
+    
+    public static function create(
+        ?string $email,
+        ?string $password
+    ): self
+    {
+        $form = new self();
+        $form->email = trim($email);
+        $form->password = trim($password);
+        
+        return $form;
+    }
     
     
     public function validate(): void
     {
-        $this->trimAllData();
-        
         if (User::EMAIL_MAX_SYMBOLS < strlen($this->email)) {
             throw new DtoValidationException('User email should has '.User::EMAIL_MAX_SYMBOLS.' symbols max.');
         }
@@ -36,9 +50,13 @@ class SignInForm
         }
     }
     
-    private function trimAllData(): void
+    public function getEmail(): string
     {
-        $this->email = trim($this->email);
-        $this->password = trim($this->password);
+        return $this->email;
+    }
+    
+    public function getPassword(): string
+    {
+        return $this->password;
     }
 }

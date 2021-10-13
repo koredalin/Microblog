@@ -12,7 +12,7 @@ use App\Controllers\Input\Forms\PostForm;
  */
 interface PostRepositoryInterface
 {
-    public function create(PostForm $input, User $user): Post;
+    public function create(User $user, PostForm $input): Post;
     
     public function getById(int $id): ?Post;
     

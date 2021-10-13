@@ -10,7 +10,7 @@ use App\Models\User;
  *
  * @author Hristo
  */
-interface AuthenticationInterface
+interface UserInterface
 {
     public function register(SignUpForm $input): User;
     
@@ -21,7 +21,21 @@ interface AuthenticationInterface
      */
     public function login(SignInForm $input): string;
     
-    public function getAuthorById(int $id): ?User;
+    public function getById(int $id): ?User;
+    
+    /**
+     * Returns the data for a single user, but without password_hash column.
+     * 
+     * @return User
+     */
+    public function getByIdPublic(int $id): ?User;
+    
+    /**
+     * Returns all the data from user table, but without password_hash column.
+     * 
+     * @return array User[]
+     */
+    public function getAllOrderByIdPublic(): array;
     
     public function getAuthorByEmail(string $email): ?User;
     
@@ -33,12 +47,4 @@ interface AuthenticationInterface
      * @return User|null
      */
     public function getAuthenticatedUser(string $bearerToken): ?User;
-    
-    public function logout(User $user): void;
-    
-    /**
-     * 
-     * @return array User[]
-     */
-    public function getAll(): array;
 }

@@ -6,11 +6,11 @@ use Exception;
 use App\Controllers\Response\ResponseStatuses;
 
 /**
- * Description of NotFoundUserException
+ * Description of NotFoundBlogPostException
  *
  * @author Hristo
  */
-class NotFoundUserException extends Exception
+class NotFoundPostException extends Exception
 {
     public function __construct(string $message = "", int $code = 0, \Throwable $previous = null)
     {

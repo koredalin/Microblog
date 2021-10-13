@@ -30,8 +30,7 @@ class JwtHandler implements JwtHandlerInterface
         date_default_timezone_set('Europe/Sofia');
         $this->issuedAt = time();
         
-        $oneHourInSeconds = 3600;
-        $this->expire = $this->issuedAt + $oneHourInSeconds;
+        $this->expire = $this->issuedAt + SESSION_DURATION_IN_SECONDS;
 
         // Set your secret or signature
         $this->jwtSecrect = "Microblog post secrect";  

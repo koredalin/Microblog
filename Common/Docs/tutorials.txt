@@ -11,6 +11,9 @@ https://www.w3jar.com/php-login-and-registration-restful-api/
 ----- How to Create PHP CRUD RESTful API in Easy Way? -----
 https://www.w3jar.com/crud-rest-api-in-php-pdo/
 
+-- slim-framework-Demo/vendor/codeguy/upload/src/Upload/
+-- Slim framework Upload files module
+https://github.com/amanssit/slim-framework-Demo/tree/master/vendor/codeguy/upload/src/Upload
 
 ### Not used sources. ###
 

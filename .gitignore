@@ -1,3 +1,5 @@
 nbproject/
 vendor/
 views/cache/
+public/images/
+puglic/images_test/

@@ -2,7 +2,7 @@
 
 namespace App\Services\Authentication;
 
-use App\Services\Authentication\Interfaces\AuthenticationInterface;
+use App\Services\Authentication\Interfaces\UserInterface;
 use App\Services\Repositories\Interfaces\UserRepositoryInterface;
 use App\Services\Authentication\Interfaces\JwtHandlerInterface;
 use App\Controllers\Input\Forms\SignInForm;
@@ -16,7 +16,7 @@ use App\Exceptions\UserAuthenticationFailException;
  *
  * @author Hristo
  */
-class AuthenticationService implements AuthenticationInterface
+class UserService implements UserInterface
 {
     private UserRepositoryInterface $userRepository;
     private JwtHandlerInterface $jwtHandler;
@@ -42,12 +42,12 @@ class AuthenticationService implements AuthenticationInterface
      */
     public function login(SignInForm $input): string
     {
-        $user = $this->userRepository->getByEmail($input->email);
+        $user = $this->userRepository->getByEmail($input->getEmail());
         if ($user === null) {
-            throw new NotFoundUserException('No user with email: '.$input->email.' registered.');
+            throw new NotFoundUserException('No user with email: '.$input->getEmail().' registered.');
         }
         
-        if (password_verify($input->password, $user->password_hash)) {
+        if (password_verify($input->getPassword(), $user->password_hash)) {
             $token = $this->jwtHandler->encodeJwtData(
                 DOMAIN,
                 array("user_id"=> $user->id),
@@ -59,9 +59,24 @@ class AuthenticationService implements AuthenticationInterface
         throw new UserAuthenticationFailException('Invalid JSON web token.');
     }
     
-    public function getAuthorById(int $id): ?User
+    public function getById(int $id): ?User
     {
         return $this->userRepository->getById($id);
+    }
+    
+    /**
+     * Returns the data for a single user, but without password_hash column.
+     * 
+     * @return User
+     */
+    public function getByIdPublic(int $id): ?User
+    {
+        $user = $this->getById($id);
+        if (null !== $user) {
+            $user->password_hash = '';
+        }
+        
+        return $user;
     }
     
     public function getAuthorByEmail(string $email): ?User
@@ -89,21 +104,13 @@ class AuthenticationService implements AuthenticationInterface
         return null;
     }
     
-    public function logout(User $user): void
-    {
-        // The easiest way with JWT is generation of a new token. Otherwise - the token should be saved into the database.
-        $this->jwtHandler->encodeJwtData(
-            DOMAIN,
-            array("user_id"=> $user->id),
-        );
-    }
-    
     /**
+     * Returns all the data from user table, but without password_hash column.
      * 
      * @return array User[]
      */
-    public function getAll(): array
+    public function getAllOrderByIdPublic(): array
     {
-        return $this->userRepository->getAllOrderById();
+        return $this->userRepository->getAllOrderByIdPublic();
     }
 }

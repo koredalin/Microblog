@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+// Helpers
 use App\Services\Helpers\DateTimeManager;
+// Exceptions
+use App\Exceptions\DtoValidationException;
 
 /**
  * Description of Post
@@ -11,18 +14,17 @@ use App\Services\Helpers\DateTimeManager;
  */
 class Post
 {
-    const IMAGES_DIR = '/public/images/';
-    
     const TITLE_MIN_SYMBOLS = 3;
     const TITLE_MAX_SYMBOLS = 255;
     const CONTENT_MIN_SYMBOLS = 10;
-    const IMAGE_FILE_PATH_MIN_SYMBOLS = 10;
+    const IMAGE_FILE_NAME_MIN_SYMBOLS = 6;
+    const IMAGE_FILE_NAME_PREFIX = 'image';
     
     public int $id;
     public int $user_id;
     public string $title;
     public string $content;
-    public string $image_file_path;
+    public string $image_file_name;
     public string $created_at;
     public string $updated_at;
     
@@ -39,12 +41,8 @@ class Post
             throw new DtoValidationException('Blog post title should has '.self::TITLE_MIN_SYMBOLS.' symbols min and '.self::TITLE_MAX_SYMBOLS.' symbols max.');
         }
         
-        if (self::CONTENT_MIN_SYMBOLS < strlen($this->content)) {
+        if (self::CONTENT_MIN_SYMBOLS > strlen($this->content)) {
             throw new DtoValidationException('Blog post content should has '.self::CONTENT_MIN_SYMBOLS.' symbols min.');
-        }
-        
-        if (self::IMAGE_FILE_PATH_MIN_SYMBOLS < strlen($this->image_file_path)) {
-            throw new DtoValidationException('Image file path has '.self::IMAGE_FILE_PATH_MIN_SYMBOLS.' symbols min.');
         }
         
         if (!DateTimeManager::isValidDateTime($this->created_at)) {
@@ -69,7 +67,7 @@ class Post
     {
         $this->title = trim($this->title);
         $this->content = trim($this->content);
-        $this->image_file_path = trim($this->image_file_path);
+        $this->image_file_name = trim($this->image_file_name);
         $this->created_at = trim($this->created_at);
         $this->updated_at = trim($this->updated_at);
     }

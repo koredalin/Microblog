@@ -8,6 +8,7 @@ $app->group('/api/v1',
         // Auth Routes
         $this->post('/user/register', UserController::class.':register');
         $this->post('/user/login', UserController::class.':login');
-        $this->post('/user/logout', UserController::class.':logout');
+        $this->get('/user', UserController::class.':index');
+        $this->get('/user/{id}', UserController::class.':view');
     }
 );

@@ -20,10 +20,10 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     public function create(SignUpForm $input): User
     {
         $user = new User();
-        $user->first_name = $input->firstName;
-        $user->last_name = $input->lastName;
-        $user->email = $input->email;
-        $user->password_hash = password_hash($input->password, PASSWORD_DEFAULT);
+        $user->first_name = $input->getFirstName();
+        $user->last_name = $input->getLastName();
+        $user->email = $input->getEmail();
+        $user->password_hash = password_hash($input->getPassword(), PASSWORD_DEFAULT);
         $user->created_at = DateTimeManager::nowStr();
         $user->updated_at = DateTimeManager::nowStr();
         
@@ -83,12 +83,21 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
     
     /**
+     * Returns all the data from user table, but without password_hash column.
      * 
      * @return array User[]
      */
-    public function getAllOrderById(): array
+    public function getAllOrderByIdPublic(): array
     {
-        $sql = "SELECT * FROM `user` ORDER BY `id`";
+        $sql = "SELECT 
+                `id`,
+                `first_name`,
+                `last_name`,
+                `email`,
+                '' AS `password_hash`,
+                `created_at`,
+                `updated_at`
+            FROM `user` ORDER BY `id`";
         $stmt = $this->dbConnection->prepare($sql);
         $stmt->execute();
         

@@ -11,16 +11,35 @@ use App\Models\User;
  *
  * @author Hristo
  */
-class SignUpForm extends SignInForm
+final class SignUpForm extends SignInForm
 {
-    public string $firstName;
-    public string $lastName;
+    private string $firstName;
+    private string $lastName;
+    
+    protected function __construct()
+    {
+        parent::__construct();
+    }
+    
+    public static function create(
+        ?string $firstName,
+        ?string $lastName,
+        ?string $email,
+        ?string $password
+    ): self
+    {
+        $form = new self();
+        $this->firstName = trim($firstName);
+        $this->lastName = trim($lastName);
+        $form->email = trim($email);
+        $form->password = trim($password);
+        
+        return $form;
+    }
     
     
     public function validate(): void
     {
-        parent::validate();
-        
         $this->trimAllData();
         
         if (User::FIRST_NAME_MIN_SYMBOLS > strlen($this->firstName) || User::FIRST_NAME_MAX_SYMBOLS < strlen($this->firstName)) {
@@ -32,9 +51,13 @@ class SignUpForm extends SignInForm
         }
     }
     
-    private function trimAllData(): void
+    public function getFirstName(): string
     {
-        $this->firstName = trim($this->firstName);
-        $this->lastName = trim($this->lastName);
+        return $this->firstName;
+    }
+    
+    public function getLastName(): string
+    {
+        return $this->lastName;
     }
 }

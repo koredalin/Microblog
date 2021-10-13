@@ -5,14 +5,21 @@ use Slim\Container;
 
 // Repository interfaces
 use App\Services\Repositories\Interfaces\UserRepositoryInterface;
+use App\Services\Repositories\Interfaces\PostRepositoryInterface;
 
 // Service interfaces
-use App\Services\Authentication\Interfaces\AuthenticationInterface;
+use App\Services\Authentication\Interfaces\UserInterface;
 use App\Services\Authentication\Interfaces\JwtHandlerInterface;
+use App\Services\Posts\Interfaces\PostInterface;
+use App\Services\Files\Interfaces\FileUploadInterface;
+use App\Services\Files\Interfaces\FileInterface;
 
 // Service classes
-use App\Services\Authentication\AuthenticationService;
+use App\Services\Authentication\UserService;
 use App\Services\Authentication\JwtHandler;
+use App\Services\Posts\PostService;
+use App\Services\Files\FileUploadService;
+use App\Services\Files\FileService;
 
 $container[JwtHandlerInterface::class] = function () {
     $userRepository = new JwtHandler();
@@ -20,8 +27,8 @@ $container[JwtHandlerInterface::class] = function () {
     return $userRepository;
 };
 
-$container[AuthenticationInterface::class] = function (Container $container) {
-    $userRepository = new AuthenticationService(
+$container[UserInterface::class] = function (Container $container) {
+    $userRepository = new UserService(
         $container[UserRepositoryInterface::class],
         $container[JwtHandlerInterface::class]
     );
@@ -29,3 +36,25 @@ $container[AuthenticationInterface::class] = function (Container $container) {
     return $userRepository;
 };
 
+$container[FileUploadInterface::class] = function () {
+    $userRepository = new FileUploadService();
+    
+    return $userRepository;
+};
+
+$container[FileInterface::class] = function () {
+    $userRepository = new FileService();
+    
+    return $userRepository;
+};
+
+$container[PostInterface::class] = function (Container $container) {
+    $userRepository = new PostService(
+        $container[UserRepositoryInterface::class],
+        $container[PostRepositoryInterface::class],
+        $container[FileUploadInterface::class],
+        $container[FileInterface::class]
+    );
+    
+    return $userRepository;
+};

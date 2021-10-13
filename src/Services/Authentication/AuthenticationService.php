@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\Author;
+namespace App\Services\Authentication;
 
-use App\Services\Author\Interfaces\AuthorAuthenticationInterface;
+use App\Services\Authentication\Interfaces\AuthenticationInterface;
 use App\Services\Repositories\Interfaces\UserRepositoryInterface;
 use App\Services\Authentication\Interfaces\JwtHandlerInterface;
 use App\Controllers\Input\Forms\SignInForm;
-use App\Controllers\Input\Forms\SignInForm;
+use App\Controllers\Input\Forms\SignUpForm;
 use App\Models\User;
 use App\Exceptions\NotFoundUserException;
 use App\Exceptions\UserAuthenticationFailException;
@@ -16,7 +16,7 @@ use App\Exceptions\UserAuthenticationFailException;
  *
  * @author Hristo
  */
-class AuthorAuthenticationService implements AuthorAuthenticationInterface
+class AuthenticationService implements AuthenticationInterface
 {
     private UserRepositoryInterface $userRepository;
     private JwtHandlerInterface $jwtHandler;
@@ -59,16 +59,26 @@ class AuthorAuthenticationService implements AuthorAuthenticationInterface
         throw new UserAuthenticationFailException('Invalid JSON web token.');
     }
     
+    public function getAuthorById(int $id): ?User
+    {
+        return $this->userRepository->getById($id);
+    }
+    
+    public function getAuthorByEmail(string $email): ?User
+    {
+        return $this->userRepository->getByEmail($email);
+    }
+    
     /**
      * Validates that an user is logged.
      * Returns "User" object if yet logged or "null" if not.
      * 
-     * @param string $bearerJwt - JSON web token.
+     * @param string $bearerToken
      * @return User|null
      */
-    public function getAuthenticatedUser(string $bearerJwt): ?User
+    public function getAuthenticatedUser(string $bearerToken): ?User
     {
-        $bearerTokenArr = explode(" ", trim($bearerJwt));
+        $bearerTokenArr = explode(' ', trim($bearerToken));
         $token = isset($bearerTokenArr[1]) && !empty(trim($bearerTokenArr[1])) ? trim($bearerTokenArr[1]) : '';
         $jwtData = $token === '' ? [] : $this->jwtHandler->decodeJwtdata(trim($token));
         if (isset($jwtData['auth']) && isset($jwtData['data']->user_id) && $jwtData['auth']) {

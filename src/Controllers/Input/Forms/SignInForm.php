@@ -3,6 +3,7 @@
 namespace App\Controllers\Input\Forms;
 
 use App\Models\User;
+use App\Exceptions\DtoValidationException;
 
 /**
  * Description of SignInForm

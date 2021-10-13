@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Services\Helpers\DateTimeManager;
+
 /**
  * Description of Post
  *
@@ -45,11 +47,11 @@ class Post
             throw new DtoValidationException('Image file path has '.self::IMAGE_FILE_PATH_MIN_SYMBOLS.' symbols min.');
         }
         
-        if (DateTimeManager::validateDateTime($this->created_at)) {
+        if (!DateTimeManager::isValidDateTime($this->created_at)) {
             throw new DtoValidationException('Not valid blog post creation date format.');
         }
         
-        if (DateTimeManager::validateDateTime($this->updated_at)) {
+        if (!DateTimeManager::isValidDateTime($this->updated_at)) {
             throw new DtoValidationException('Not valid blog post update date format.');
         }
     }

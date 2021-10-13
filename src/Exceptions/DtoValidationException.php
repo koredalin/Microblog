@@ -12,10 +12,10 @@ use App\Controllers\Response\ResponseStatuses;
  */
 class DtoValidationException extends Exception
 {
-    public function __construct(string $message = "", int $code = 0, \Throwable $previous = null): Exception
+    public function __construct(string $message = "", int $code = 0, \Throwable $previous = null)
     {
         $code = ResponseStatuses::UNPROCESSABLE_ENTITY;
         
-        return parent::__construct($message, $code, $previous);
+        parent::__construct($message, $code, $previous);
     }
 }

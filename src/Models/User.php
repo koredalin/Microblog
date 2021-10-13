@@ -52,11 +52,11 @@ class User
             throw new DtoValidationException('User password hash should has '.self::PASSWORD_HASH_MAX_SYMBOLS.' symbols max.');
         }
         
-        if (DateTimeManager::validateDateTime($this->created_at)) {
+        if (!DateTimeManager::isValidDateTime($this->created_at)) {
             throw new DtoValidationException('Not valid user creation date format.');
         }
         
-        if (DateTimeManager::validateDateTime($this->updated_at)) {
+        if (!DateTimeManager::isValidDateTime($this->updated_at)) {
             throw new DtoValidationException('Not valid user update date format.');
         }
     }

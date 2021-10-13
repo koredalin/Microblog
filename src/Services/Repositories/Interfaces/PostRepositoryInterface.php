@@ -4,7 +4,7 @@ namespace App\Services\Repositories\Interfaces;
 
 use App\Models\User;
 use App\Models\Post;
-use App\Controllers\Input\Forms\BlogPostForm;
+use App\Controllers\Input\Forms\PostForm;
 
 /**
  *
@@ -12,7 +12,7 @@ use App\Controllers\Input\Forms\BlogPostForm;
  */
 interface PostRepositoryInterface
 {
-    public function create(BlogPostForm $input, User $user): Post;
+    public function create(PostForm $input, User $user): Post;
     
     public function getById(int $id): ?Post;
     

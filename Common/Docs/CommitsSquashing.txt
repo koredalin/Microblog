@@ -1,0 +1,9 @@
+Microblog commits assembling
+
+Links:
+	https://www.w3docs.com/snippets/git/how-to-combine-multiple-commits-into-one-with-3-steps.html
+	https://stackoverflow.com/a/5721879/3144561
+
+-- Initial commit 4f70b3bf12b6c9a1dee6dc
+# Assembling first group
+2.) git rebase --interactive 4f70b3bf12b6c9a1

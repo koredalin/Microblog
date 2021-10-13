@@ -21,6 +21,15 @@ interface AuthorAuthenticationInterface
      */
     public function login(SignInForm $input): string;
     
+    /**
+     * Validates that an user is logged.
+     * Returns "User" object if yet logged or "null" if not.
+     * 
+     * @param string $jwt - JSON web token.
+     * @return User|null
+     */
+    public function getAuthenticatedUser(string $jwt): ?User;
+    
     public function logout(SignInForm $input): User;
     
     /**

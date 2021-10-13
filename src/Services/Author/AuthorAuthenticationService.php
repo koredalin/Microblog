@@ -48,7 +48,6 @@ class AuthorAuthenticationService implements AuthorAuthenticationInterface
         }
         
         if (password_verify($input->password, $user->password_hash)) {
-            $jwt = new JwtHandler();
             $token = $this->jwtHandler->encodeJwtData(
                 DOMAIN,
                 array("user_id"=> $user->id),
@@ -60,9 +59,33 @@ class AuthorAuthenticationService implements AuthorAuthenticationInterface
         throw new UserAuthenticationFailException('Invalid JSON web token.');
     }
     
-    public function logout(SignInForm $input): User
+    /**
+     * Validates that an user is logged.
+     * Returns "User" object if yet logged or "null" if not.
+     * 
+     * @param string $bearerJwt - JSON web token.
+     * @return User|null
+     */
+    public function getAuthenticatedUser(string $bearerJwt): ?User
     {
+        $bearerTokenArr = explode(" ", trim($bearerJwt));
+        $token = isset($bearerTokenArr[1]) && !empty(trim($bearerTokenArr[1])) ? trim($bearerTokenArr[1]) : '';
+        $jwtData = $token === '' ? [] : $this->jwtHandler->decodeJwtdata(trim($token));
+        if (isset($jwtData['auth']) && isset($jwtData['data']->user_id) && $jwtData['auth']) {
+            $user = $this->userRepository->getById($jwtData['data']->user_id);
+            return $user;
+        }
         
+        return null;
+    }
+    
+    public function logout(User $user): void
+    {
+        // The easiest way with JWT is generation of a new token. Otherwise - the token should be saved into the database.
+        $this->jwtHandler->encodeJwtData(
+            DOMAIN,
+            array("user_id"=> $user->id),
+        );
     }
     
     /**

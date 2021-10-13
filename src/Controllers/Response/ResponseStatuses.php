@@ -5,6 +5,7 @@ namespace App\Controllers\Response;
 final class ResponseStatuses
 {
     const SUCCESS = 200;
+    const CREATED = 201;
     const ALREADY_REPORTED = 208;
     const FORBIDDEN = 403;
     const NOT_FOUND = 404;

@@ -12,6 +12,13 @@ use App\Services\Helpers\DateTimeManager;
  */
 class User
 {
+    const FIRST_NAME_MIN_SYMBOLS = 3;
+    const FIRST_NAME_MAX_SYMBOLS = 60;
+    const LAST_NAME_MIN_SYMBOLS = 3;
+    const LAST_NAME_MAX_SYMBOLS = 60;
+    const EMAIL_MAX_SYMBOLS = 255;
+    const PASSWORD_HASH_MAX_SYMBOLS = 255;
+    
     public int $id;
     public string $first_name;
     public string $last_name;
@@ -25,31 +32,31 @@ class User
     {
         $this->trimAllData();
         
-        if (3 > strlen($this->first_name) || 60 < strlen($this->first_name)) {
-            throw new DtoValidationException('User first name should be between 3 and 60 symbols');
+        if (self::FIRST_NAME_MIN_SYMBOLS > strlen($this->first_name) || self::FIRST_NAME_MAX_SYMBOLS < strlen($this->first_name)) {
+            throw new DtoValidationException('User first name should be between '.self::FIRST_NAME_MIN_SYMBOLS.' and '.self::FIRST_NAME_MAX_SYMBOLS.' symbols');
         }
         
-        if (3 > strlen($this->last_name) || 60 < strlen($this->last_name)) {
-            throw new DtoValidationException('User lasst name should be between 3 and 60 symbols');
+        if (self::LAST_NAME_MIN_SYMBOLS > strlen($this->last_name) || self::LAST_NAME_MAX_SYMBOLS < strlen($this->last_name)) {
+            throw new DtoValidationException('User lasst name should be between '.self::LAST_NAME_MIN_SYMBOLS.' and '.self::LAST_NAME_MAX_SYMBOLS.' symbols');
         }
         
-        if (255 < strlen($this->email)) {
-            throw new DtoValidationException('User email should has 255 symbols max.');
+        if (self::EMAIL_MAX_SYMBOLS < strlen($this->email)) {
+            throw new DtoValidationException('User email should has '.self::EMAIL_MAX_SYMBOLS.' symbols max.');
         }
         
         if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             throw new DtoValidationException('Invalid email format.');
         }
         
-        if (255 < strlen($this->password_hash)) {
-            throw new DtoValidationException('User password hash should has 255 symbols max.');
+        if (self::PASSWORD_HASH_MAX_SYMBOLS < strlen($this->password_hash)) {
+            throw new DtoValidationException('User password hash should has '.self::PASSWORD_HASH_MAX_SYMBOLS.' symbols max.');
         }
         
-        if (DateTimeManager::validateDateTime($this->created_at)) {
+        if (!DateTimeManager::isValidDateTime($this->created_at)) {
             throw new DtoValidationException('Not valid user creation date format.');
         }
         
-        if (DateTimeManager::validateDateTime($this->updated_at)) {
+        if (!DateTimeManager::isValidDateTime($this->updated_at)) {
             throw new DtoValidationException('Not valid user update date format.');
         }
     }

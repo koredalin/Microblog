@@ -6,11 +6,11 @@ use Exception;
 use App\Controllers\Response\ResponseStatuses;
 
 /**
- * Description of DtoValidationException
+ * Description of NotFoundUserException
  *
  * @author Hristo
  */
-class DtoValidationException extends Exception
+class NotFoundUserException extends Exception
 {
     public function __construct(string $message = "", int $code = 0, \Throwable $previous = null)
     {

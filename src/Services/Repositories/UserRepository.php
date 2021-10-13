@@ -70,7 +70,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     
     public function getByEmail(string $email): ?User
     {
-        $check_email = "SELECT `email` FROM `user` WHERE `email`=:email";
+        $check_email = "SELECT * FROM `user` WHERE `email`=:email";
         $stmt = $this->dbConnection->prepare($check_email);
         $stmt->bindValue(':email', trim($email), PDO::PARAM_STR);
         $stmt->execute();

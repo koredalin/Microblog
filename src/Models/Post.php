@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Services\Helpers\DateTimeManager;
+
 /**
  * Description of Post
  *
@@ -10,6 +12,11 @@ namespace App\Models;
 class Post
 {
     const IMAGES_DIR = '/public/images/';
+    
+    const TITLE_MIN_SYMBOLS = 3;
+    const TITLE_MAX_SYMBOLS = 255;
+    const CONTENT_MIN_SYMBOLS = 10;
+    const IMAGE_FILE_PATH_MIN_SYMBOLS = 10;
     
     public int $id;
     public int $user_id;
@@ -28,23 +35,23 @@ class Post
             throw new DtoValidationException('User id is not set.');
         }
         
-        if (3 > strlen($this->title) || 255 < strlen($this->title)) {
-            throw new DtoValidationException('Blog post title should has 10 symbols min.');
+        if (self::TITLE_MIN_SYMBOLS > strlen($this->title) || self::TITLE_MAX_SYMBOLS < strlen($this->title)) {
+            throw new DtoValidationException('Blog post title should has '.self::TITLE_MIN_SYMBOLS.' symbols min and '.self::TITLE_MAX_SYMBOLS.' symbols max.');
         }
         
-        if (10 < strlen($this->content)) {
-            throw new DtoValidationException('Blog post content should has 10 symbols min.');
+        if (self::CONTENT_MIN_SYMBOLS < strlen($this->content)) {
+            throw new DtoValidationException('Blog post content should has '.self::CONTENT_MIN_SYMBOLS.' symbols min.');
         }
         
-        if (10 < strlen($this->image_file_path)) {
-            throw new DtoValidationException('Image file path has 10 symbols min.');
+        if (self::IMAGE_FILE_PATH_MIN_SYMBOLS < strlen($this->image_file_path)) {
+            throw new DtoValidationException('Image file path has '.self::IMAGE_FILE_PATH_MIN_SYMBOLS.' symbols min.');
         }
         
-        if (DateTimeManager::validateDateTime($this->created_at)) {
+        if (!DateTimeManager::isValidDateTime($this->created_at)) {
             throw new DtoValidationException('Not valid blog post creation date format.');
         }
         
-        if (DateTimeManager::validateDateTime($this->updated_at)) {
+        if (!DateTimeManager::isValidDateTime($this->updated_at)) {
             throw new DtoValidationException('Not valid blog post update date format.');
         }
     }

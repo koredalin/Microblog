@@ -6,15 +6,15 @@ use Exception;
 use App\Controllers\Response\ResponseStatuses;
 
 /**
- * Description of DtoValidationException
+ * Description of UserAuthenticationFailException
  *
  * @author Hristo
  */
-class DtoValidationException extends Exception
+class UserAuthenticationFailException extends Exception
 {
     public function __construct(string $message = "", int $code = 0, \Throwable $previous = null)
     {
-        $code = ResponseStatuses::UNPROCESSABLE_ENTITY;
+        $code = ResponseStatuses::FORBIDDEN;
         
         parent::__construct($message, $code, $previous);
     }

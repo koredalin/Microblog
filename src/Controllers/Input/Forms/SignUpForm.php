@@ -29,8 +29,8 @@ final class SignUpForm extends SignInForm
     ): self
     {
         $form = new self();
-        $this->firstName = trim($firstName);
-        $this->lastName = trim($lastName);
+        $form->firstName = trim($firstName);
+        $form->lastName = trim($lastName);
         $form->email = trim($email);
         $form->password = trim($password);
         
@@ -40,8 +40,6 @@ final class SignUpForm extends SignInForm
     
     public function validate(): void
     {
-        $this->trimAllData();
-        
         if (User::FIRST_NAME_MIN_SYMBOLS > strlen($this->firstName) || User::FIRST_NAME_MAX_SYMBOLS < strlen($this->firstName)) {
             throw new DtoValidationException('User first name should be between '.User::FIRST_NAME_MIN_SYMBOLS.' and '.User::FIRST_NAME_MAX_SYMBOLS.' symbols');
         }

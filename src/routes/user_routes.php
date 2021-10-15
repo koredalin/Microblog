@@ -10,5 +10,6 @@ $app->group('/api/v1',
         $this->post('/user/login', UserController::class.':login');
         $this->get('/user', UserController::class.':index');
         $this->get('/user/{id}', UserController::class.':view');
+        $this->delete('/user/{id}', UserController::class.':delete');
     }
 );

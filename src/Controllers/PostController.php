@@ -32,7 +32,7 @@ use App\Exceptions\NotDeletedFileException;
  */
 class PostController extends ApiBaseController
 {
-    private UserInterface $authService;
+    private UserInterface $userService;
     private PostInterface $postService;
     
     public function __construct (
@@ -40,7 +40,7 @@ class PostController extends ApiBaseController
         PostInterface $postService
     )
     {
-        $this->authService = $authService;
+        $this->userService = $authService;
         $this->postService = $postService;
     }
     
@@ -59,7 +59,7 @@ class PostController extends ApiBaseController
             return $this->render(['message' => $ex->getMessage()], $args, $responseStatusCode);
         }
         
-        return $this->render(['message' => 'Successful blog post upload.', 'user_id' => $user->id, 'post_id' => $post->id], $args, ResponseStatuses::CREATED);
+        return $this->render(['message' => 'Blog post created.', 'user_id' => $user->id, 'post_id' => $post->id], $args, ResponseStatuses::CREATED);
     }
     
     public function index(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
@@ -136,7 +136,7 @@ class PostController extends ApiBaseController
     {
         $authorizationHeaders = $request->getHeader('Authorization');
         $bearerToken = isset($authorizationHeaders[0]) ? trim($authorizationHeaders[0]) : '';
-        $user = $this->authService->getAuthenticatedUser($bearerToken);
+        $user = $this->userService->getAuthenticatedUser($bearerToken);
         if ($user === null) {
             throw new UserAuthenticationFailException('Not logged user. Please, log in again.');
         }

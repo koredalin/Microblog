@@ -47,4 +47,6 @@ interface UserInterface
      * @return User|null
      */
     public function getAuthenticatedUser(string $bearerToken): ?User;
+    
+    public function delete(User $user): void;
 }

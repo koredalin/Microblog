@@ -4,6 +4,8 @@ namespace App\Services\User;
 
 use App\Services\User\Interfaces\UserInterface;
 use App\Services\Repositories\Interfaces\UserRepositoryInterface;
+use App\Services\Repositories\Interfaces\PostRepositoryInterface;
+use App\Services\Files\Interfaces\FileInterface;
 use App\Services\User\Interfaces\JwtHandlerInterface;
 use App\Models\Input\SignInForm;
 use App\Models\Input\SignUpForm;
@@ -20,14 +22,20 @@ class UserService implements UserInterface
 {
     private UserRepositoryInterface $userRepository;
     private JwtHandlerInterface $jwtHandler;
+    private PostRepositoryInterface $postRepository;
+    private FileInterface $fileService;
     
     public function __construct(
         UserRepositoryInterface $userRepository,
-        JwtHandlerInterface $jwtHandler
+        JwtHandlerInterface $jwtHandler,
+        PostRepositoryInterface $postRepository,
+        FileInterface $fileService
     )
     {
         $this->userRepository = $userRepository;
         $this->jwtHandler = $jwtHandler;
+        $this->postRepository = $postRepository;
+        $this->fileService = $fileService;
     }
     
     public function register(SignUpForm $input): User
@@ -112,5 +120,15 @@ class UserService implements UserInterface
     public function getAllOrderByIdPublic(): array
     {
         return $this->userRepository->getAllOrderByIdPublic();
+    }
+    
+    public function delete(User $user): void
+    {
+        $posts = $this->postRepository->getAllByUserIdOrderById($user->id);
+        foreach ($posts as $post) {
+            $this->fileService->delete(IMAGES_UPLOAD_DIR, trim($post->image_file_name));
+        }
+        
+        $this->userRepository->delete($user);
     }
 }

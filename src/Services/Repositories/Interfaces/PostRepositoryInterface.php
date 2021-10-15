@@ -24,6 +24,12 @@ interface PostRepositoryInterface
      */
     public function getAllOrderById(): array;
     
+    /**
+     * 
+     * @return array Post[]
+     */
+    public function getAllByUserIdOrderById(int $userId): array;
+    
     public function update(Post $post): Post;
     
     public function delete(Post $post): void;

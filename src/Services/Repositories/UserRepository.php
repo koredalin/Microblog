@@ -8,6 +8,7 @@ use App\Models\Input\SignUpForm;
 use App\Models\User;
 use App\Services\Helpers\DateTimeManager;
 use App\Exceptions\AlreadyExistingDbRecordException;
+use App\Exceptions\NotFoundUserException;
 use Exception;
 
 /**
@@ -143,7 +144,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         
         // No such DB User record.
         if (null === $this->getById($user->id)) {
-            return;
+            throw new NotFoundUserException('User with id: '.$user->id.' does not exists and cannot be deleted.');
         }
 
         $delete_post = "DELETE FROM `user` WHERE id=:id";

@@ -1,0 +1,12 @@
+actor: ApiTester
+modules:
+    enabled:
+        - \Helper\Api
+        - REST:
+            url: http://localhost/microblog/public/api
+            depends: PhpBrowser
+            part: Json
+        - Db:
+            dsn: "mysql:host=localhost:3306;dbname=microblog_test;"
+            user: "microblog"
+            password: "microblog_pass"

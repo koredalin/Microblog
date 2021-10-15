@@ -27,15 +27,6 @@ $container[JwtHandlerInterface::class] = function () {
     return $userRepository;
 };
 
-$container[UserInterface::class] = function (Container $container) {
-    $userRepository = new UserService(
-        $container[UserRepositoryInterface::class],
-        $container[JwtHandlerInterface::class]
-    );
-    
-    return $userRepository;
-};
-
 $container[FileUploadInterface::class] = function () {
     $userRepository = new FileUploadService();
     
@@ -44,6 +35,17 @@ $container[FileUploadInterface::class] = function () {
 
 $container[FileInterface::class] = function () {
     $userRepository = new FileService();
+    
+    return $userRepository;
+};
+
+$container[UserInterface::class] = function (Container $container) {
+    $userRepository = new UserService(
+        $container[UserRepositoryInterface::class],
+        $container[JwtHandlerInterface::class],
+        $container[PostRepositoryInterface::class],
+        $container[FileInterface::class]
+    );
     
     return $userRepository;
 };

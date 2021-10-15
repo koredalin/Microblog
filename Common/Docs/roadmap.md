@@ -7,26 +7,24 @@
 	
 Additional Components
 
-- [x] Symfony Validator
-- [x] Doctrine
-- [x] Doctrine Migrations
+- [x] [CodeCeption](https://codeception.com/) testing framework
 
 
 ## Database
 
 General deployment of User and BlogPost entities.
 
-- [ ] Entities
-- [ ] Repository Services
-- [ ] Query Services
-- [ ] Database migrations
-- [ ] The database scheme as an image.
-	[DB Scheme image]()
+- [x] Entities
+- [x] Repository Services
+- [x] SQL Dump with testing data
+	[SQL Dump](https://github.com/koredalin/Microblog/blob/master/Common/db_dumps/db_scheme_14X2021.png)
+- [x] The database scheme as an image.
+	[DB Scheme image](https://github.com/koredalin/Microblog/blob/master/Common/db_dumps/db_scheme_14X2021.png)
 
 ### CRUD
 
-- [ ] User entity.
-- [ ] BlogPost entity.
+- [x] User entity.
+- [x] Post entity.
 
 ### Adding default data for testing later development.
 
@@ -38,15 +36,17 @@ Developing a controller and service for:
 
 - [x] Sign up.
 - [x] Log in.
-- [x] Log out.
+- [x] Post creation.
+- [x] Post update.
+- [x] Post deletion.
 
 ### Collecting data
 - [x] All Users.
-- [x] All blog post by user.
+- [ ] All blog post by user.
 
 ### Images modules
-- [x] Upload.
-- [x] Updating a blog post image if needed.
+- [x] Upload images.
+- [x] Deleting files.
 
 ### Testing
 Needs additional review.

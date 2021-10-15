@@ -2,16 +2,28 @@
 
 namespace App\Controllers;
 
+// Base controller
 use App\Controllers\ApiBaseController;
-use App\Services\User\Interfaces\UserInterface;
+
+// Request
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\ResponseInterface;
+
+// Services
+use App\Services\User\Interfaces\UserInterface;
+
+// Models
 use App\Models\Input\SignUpForm;
 use App\Models\Input\SignInForm;
+use App\Models\User;
+
+// Exceptions
 use App\Exceptions\DtoValidationException;
 use App\Exceptions\AlreadyExistingDbRecordException;
 use App\Exceptions\NotFoundUserException;
 use App\Exceptions\UserAuthenticationFailException;
+
+// Response
+use Psr\Http\Message\ResponseInterface;
 use App\Controllers\Response\ResponseStatuses;
 
 /**
@@ -36,7 +48,7 @@ class UserController extends ApiBaseController
         
         $requestBody = \json_decode($request->getBody()->getContents(), true);
         try {
-            $signUpForm = SignUpForm::create(
+            $signUpForm = SignUpForm::createSignUpForm(
                 $requestBody['firstName'],
                 $requestBody['lastName'],
                 $requestBody['email'],
@@ -49,7 +61,7 @@ class UserController extends ApiBaseController
             return $this->render(['message' => $ex->getMessage()], $args, $responseStatusCode);
         }
         
-        return $this->render(['message' => 'Successful registration', 'user_id' => $author->id,], $args, ResponseStatuses::CREATED);
+        return $this->render(['message' => 'Successful registration.', 'user_id' => $author->id,], $args, ResponseStatuses::CREATED);
     }
     
     public function login(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
@@ -58,7 +70,7 @@ class UserController extends ApiBaseController
         
         $requestBody = \json_decode($request->getBody()->getContents(), true);
         try {
-            $signInForm = SignInForm::create(
+            $signInForm = SignInForm::createSignInForm(
                 $requestBody['email'],
                 $requestBody['password']
             );
@@ -103,5 +115,36 @@ class UserController extends ApiBaseController
         }
         
         return $this->render(['message' => 'Single user data.', 'result' => $user, 'user_id' => $userId,], $args);
+    }
+    
+    public function delete(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    {
+        $this->response = $response;
+        
+        try {
+            $userForDeletionId = isset($args['id']) ? (int)$args['id'] : 0;
+            $currentUser = $this->getAuthenticatedUser($request);
+            if ($userForDeletionId !== $currentUser->id) {
+                throw new WrongUserDeletionException('You can delete yourself only. User id: '.$userForDeletionId.'.');
+            }
+            $this->userService->delete($currentUser);
+        } catch (UserAuthenticationFailException | WrongUserDeletionException | NotFoundUserException | Exception $ex) {
+            $responseStatusCode = (int)$ex->getCode() > 0 ? (int)$ex->getCode() : ResponseStatuses::INTERNAL_SERVER_ERROR;
+            return $this->render(['message' => $ex->getMessage()], $args, $responseStatusCode);
+        }
+        
+        return $this->render(['message' => 'User deleted.', 'user_id' => $currentUser->id,], $args);
+    }
+    
+    private function getAuthenticatedUser(ServerRequestInterface $request): User
+    {
+        $authorizationHeaders = $request->getHeader('Authorization');
+        $bearerToken = isset($authorizationHeaders[0]) ? trim($authorizationHeaders[0]) : '';
+        $user = $this->userService->getAuthenticatedUser($bearerToken);
+        if ($user === null) {
+            throw new UserAuthenticationFailException('Not logged user. Please, log in again.');
+        }
+        
+        return $user;
     }
 }

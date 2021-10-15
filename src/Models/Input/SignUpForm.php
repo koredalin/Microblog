@@ -21,7 +21,7 @@ final class SignUpForm extends SignInForm
         parent::__construct();
     }
     
-    public static function create(
+    public static function createSignUpForm(
         ?string $firstName,
         ?string $lastName,
         ?string $email,

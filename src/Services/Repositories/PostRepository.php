@@ -109,6 +109,27 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
         return [];
     }
     
+    /**
+     * 
+     * @return array Post[]
+     */
+    public function getAllByUserIdOrderById(int $userId): array
+    {
+        $sql = "SELECT *
+            FROM `post`
+            WHERE `user_id` = :user_id
+            ORDER BY `id`";
+        $stmt = $this->dbConnection->prepare($sql);
+        $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        if ($stmt->rowCount() > 0) {
+            return $stmt->fetchAll(PDO::FETCH_CLASS, Post::class);
+        }
+    
+        return [];
+    }
+    
     public function update(Post $post): Post
     {
         $post->validateDbRecord();

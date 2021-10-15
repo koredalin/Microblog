@@ -22,7 +22,7 @@ class SignInForm
     {
     }
     
-    public static function create(
+    public static function createSignInForm(
         ?string $email,
         ?string $password
     ): self

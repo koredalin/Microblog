@@ -4,7 +4,7 @@ namespace App\Services\Repositories\Interfaces;
 
 use App\Models\User;
 use App\Models\Post;
-use App\Controllers\Input\Forms\PostForm;
+use App\Models\Input\PostForm;
 
 /**
  *

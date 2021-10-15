@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\Authentication;
+namespace App\Services\User;
 
-use App\Services\Authentication\Interfaces\JwtHandlerInterface;
+use App\Services\User\Interfaces\JwtHandlerInterface;
 use Firebase\JWT\JWT;
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\SignatureInvalidException;

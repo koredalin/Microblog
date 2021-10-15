@@ -4,7 +4,7 @@
 use Slim\Container;
 
 // Service interfaces
-use App\Services\Authentication\Interfaces\UserInterface;
+use App\Services\User\Interfaces\UserInterface;
 use App\Services\Posts\Interfaces\PostInterface;
 
 // Controllers

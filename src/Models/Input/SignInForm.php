@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Input\Forms;
+namespace App\Models\Input;
 
 use App\Models\User;
 use App\Exceptions\DtoValidationException;
@@ -37,7 +37,7 @@ class SignInForm
     
     public function validate(): void
     {
-        if (User::EMAIL_MAX_SYMBOLS < strlen($this->email)) {
+        if (User::EMAIL_MAX_SYMBOLS < mb_strlen($this->email)) {
             throw new DtoValidationException('User email should has '.User::EMAIL_MAX_SYMBOLS.' symbols max.');
         }
         
@@ -45,7 +45,7 @@ class SignInForm
             throw new DtoValidationException('Invalid email format.');
         }
         
-        if (self::PASSWORD_MIN_SYMBOLS > strlen($this->password) || self::PASSWORD_MAX_SYMBOLS < strlen($this->password)) {
+        if (self::PASSWORD_MIN_SYMBOLS > mb_strlen($this->password) || self::PASSWORD_MAX_SYMBOLS < mb_strlen($this->password)) {
             throw new DtoValidationException('User password should has '.self::PASSWORD_MIN_SYMBOLS.' symbols min and '.self::PASSWORD_MAX_SYMBOLS.' symbols max.');
         }
     }

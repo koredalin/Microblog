@@ -32,15 +32,15 @@ class User
     {
         $this->trimAllData();
         
-        if (self::FIRST_NAME_MIN_SYMBOLS > strlen($this->first_name) || self::FIRST_NAME_MAX_SYMBOLS < strlen($this->first_name)) {
+        if (self::FIRST_NAME_MIN_SYMBOLS > mb_strlen($this->first_name) || self::FIRST_NAME_MAX_SYMBOLS < mb_strlen($this->first_name)) {
             throw new DtoValidationException('User first name should be between '.self::FIRST_NAME_MIN_SYMBOLS.' and '.self::FIRST_NAME_MAX_SYMBOLS.' symbols');
         }
         
-        if (self::LAST_NAME_MIN_SYMBOLS > strlen($this->last_name) || self::LAST_NAME_MAX_SYMBOLS < strlen($this->last_name)) {
+        if (self::LAST_NAME_MIN_SYMBOLS > mb_strlen($this->last_name) || self::LAST_NAME_MAX_SYMBOLS < mb_strlen($this->last_name)) {
             throw new DtoValidationException('User lasst name should be between '.self::LAST_NAME_MIN_SYMBOLS.' and '.self::LAST_NAME_MAX_SYMBOLS.' symbols');
         }
         
-        if (self::EMAIL_MAX_SYMBOLS < strlen($this->email)) {
+        if (self::EMAIL_MAX_SYMBOLS < mb_strlen($this->email)) {
             throw new DtoValidationException('User email should has '.self::EMAIL_MAX_SYMBOLS.' symbols max.');
         }
         
@@ -48,7 +48,7 @@ class User
             throw new DtoValidationException('Invalid email format.');
         }
         
-        if (self::PASSWORD_HASH_MAX_SYMBOLS < strlen($this->password_hash)) {
+        if (self::PASSWORD_HASH_MAX_SYMBOLS < mb_strlen($this->password_hash)) {
             throw new DtoValidationException('User password hash should has '.self::PASSWORD_HASH_MAX_SYMBOLS.' symbols max.');
         }
         

@@ -5,7 +5,7 @@ namespace App\Controllers;
 // Base Controller
 use App\Controllers\ApiBaseController;
 // Used Services
-use App\Services\Authentication\Interfaces\UserInterface;
+use App\Services\User\Interfaces\UserInterface;
 use App\Services\Posts\Interfaces\PostInterface;
 // Request - Response
 use Psr\Http\Message\ServerRequestInterface;
@@ -13,7 +13,7 @@ use Psr\Http\Message\UploadedFileInterface;
 use Psr\Http\Message\ResponseInterface;
 use App\Controllers\Response\ResponseStatuses;
 // Input forms
-use App\Controllers\Input\Forms\PostForm;
+use App\Models\Input\PostForm;
 // Models
 use App\Models\User;
 // Exceptions
@@ -108,7 +108,7 @@ class PostController extends ApiBaseController
             }
             
             $updatedPost = $this->postService->update($user, $postForm, $post);
-        } catch (NotFoundUserException | UserAuthenticationFailException | DtoValidationException | NotFoundPostException | AlreadyExistingDbRecordException | FileUploadException | Exception $ex) {
+        } catch (NotFoundUserException | UserAuthenticationFailException | DtoValidationException | NotFoundPostException | AlreadyExistingDbRecordException | FileUploadException | \InvalidArgumentException | \RuntimeException | Exception $ex) {
             $responseStatusCode = (int)$ex->getCode() > 0 ? (int)$ex->getCode() : ResponseStatuses::INTERNAL_SERVER_ERROR;
             return $this->render(['message' => $ex->getMessage()], $args, $responseStatusCode);
         }
@@ -124,7 +124,7 @@ class PostController extends ApiBaseController
             $user = $this->getAuthenticatedUser($request);
             $postId = isset($args['id']) ? (int)$args['id'] : 0;
             $this->postService->delete($postId);
-        } catch (NotFoundUserException | UserAuthenticationFailException | AlreadyExistingDbRecordException | FileUploadException | NotDeletedFileException | Exception $ex) {
+        } catch (NotFoundUserException | UserAuthenticationFailException | AlreadyExistingDbRecordException | FileUploadException | NotDeletedFileException | \InvalidArgumentException | \RuntimeException | Exception $ex) {
             $responseStatusCode = (int)$ex->getCode() > 0 ? (int)$ex->getCode() : ResponseStatuses::INTERNAL_SERVER_ERROR;
             return $this->render(['message' => $ex->getMessage()], $args, $responseStatusCode);
         }

@@ -8,7 +8,7 @@ use App\Services\Repositories\Interfaces\PostRepositoryInterface;
 use App\Services\Files\Interfaces\FileUploadInterface;
 use App\Services\Files\Interfaces\FileInterface;
 // Input forms
-use App\Controllers\Input\Forms\PostForm;
+use App\Models\Input\PostForm;
 // Models
 use App\Models\User;
 use App\Models\Post;
@@ -93,6 +93,11 @@ class PostService implements PostInterface
         // Move the uploaded file to public images directory.
         $imageFileBaseName = Post::IMAGE_FILE_NAME_PREFIX.$post->id;
         $finalFileName = $this->fileUpload->moveUploadedFile(IMAGES_UPLOAD_DIR, $input->getUploadedImage(), $imageFileBaseName);
+        
+        // Deletes the old file, if it is with another extension.
+        if (trim($post->image_file_name) !== '' && $finalFileName !== $post->image_file_name) {
+            $this->file->delete(IMAGES_UPLOAD_DIR, $post->image_file_name);
+        }
         
         // Update the post.image_file_name into the database.
         $post->image_file_name = $finalFileName;

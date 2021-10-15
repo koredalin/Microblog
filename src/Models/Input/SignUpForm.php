@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controllers\Input\Forms;
+namespace App\Models\Input;
 
-use App\Controllers\Input\Forms\SignInForm;
+use App\Models\Input\SignInForm;
 
 use App\Models\User;
 
@@ -40,11 +40,11 @@ final class SignUpForm extends SignInForm
     
     public function validate(): void
     {
-        if (User::FIRST_NAME_MIN_SYMBOLS > strlen($this->firstName) || User::FIRST_NAME_MAX_SYMBOLS < strlen($this->firstName)) {
+        if (User::FIRST_NAME_MIN_SYMBOLS > mb_strlen($this->firstName) || User::FIRST_NAME_MAX_SYMBOLS < mb_strlen($this->firstName)) {
             throw new DtoValidationException('User first name should be between '.User::FIRST_NAME_MIN_SYMBOLS.' and '.User::FIRST_NAME_MAX_SYMBOLS.' symbols');
         }
         
-        if (User::LAST_NAME_MIN_SYMBOLS > strlen($this->lastName) || User::LAST_NAME_MAX_SYMBOLS < strlen($this->lastName)) {
+        if (User::LAST_NAME_MIN_SYMBOLS > mb_strlen($this->lastName) || User::LAST_NAME_MAX_SYMBOLS < mb_strlen($this->lastName)) {
             throw new DtoValidationException('User last name should be between '.User::LAST_NAME_MIN_SYMBOLS.' and '.User::LAST_NAME_MAX_SYMBOLS.' symbols');
         }
     }

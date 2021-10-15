@@ -8,15 +8,15 @@ use App\Services\Repositories\Interfaces\UserRepositoryInterface;
 use App\Services\Repositories\Interfaces\PostRepositoryInterface;
 
 // Service interfaces
-use App\Services\Authentication\Interfaces\UserInterface;
-use App\Services\Authentication\Interfaces\JwtHandlerInterface;
+use App\Services\User\Interfaces\UserInterface;
+use App\Services\User\Interfaces\JwtHandlerInterface;
 use App\Services\Posts\Interfaces\PostInterface;
 use App\Services\Files\Interfaces\FileUploadInterface;
 use App\Services\Files\Interfaces\FileInterface;
 
 // Service classes
-use App\Services\Authentication\UserService;
-use App\Services\Authentication\JwtHandler;
+use App\Services\User\UserService;
+use App\Services\User\JwtHandler;
 use App\Services\Posts\PostService;
 use App\Services\Files\FileUploadService;
 use App\Services\Files\FileService;

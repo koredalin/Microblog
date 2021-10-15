@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Input\Forms;
+namespace App\Models\Input;
 
 use App\Models\Post;
 use Psr\Http\Message\UploadedFileInterface;
@@ -43,11 +43,11 @@ final class PostForm
     
     public function validate(): void
     {
-        if (Post::TITLE_MIN_SYMBOLS > strlen($this->title) || Post::TITLE_MAX_SYMBOLS < strlen($this->title)) {
+        if (Post::TITLE_MIN_SYMBOLS > mb_strlen($this->title) || Post::TITLE_MAX_SYMBOLS < mb_strlen($this->title)) {
             throw new DtoValidationException('Blog post title should has '.Post::TITLE_MIN_SYMBOLS.' symbols min and '.Post::TITLE_MAX_SYMBOLS.' symbols max.');
         }
         
-        if (Post::CONTENT_MIN_SYMBOLS > strlen($this->content)) {
+        if (Post::CONTENT_MIN_SYMBOLS > mb_strlen($this->content)) {
             throw new DtoValidationException('Blog post content should has '.Post::CONTENT_MIN_SYMBOLS.' symbols min.');
         }
         

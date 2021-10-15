@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Authentication\Interfaces;
+namespace App\Services\User\Interfaces;
 
 /**
  * JSON Web Token

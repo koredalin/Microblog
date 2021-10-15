@@ -4,7 +4,7 @@ namespace App\Services\Repositories;
 
 use PDO;
 use App\Services\Repositories\Interfaces\UserRepositoryInterface;
-use App\Controllers\Input\Forms\SignUpForm;
+use App\Models\Input\SignUpForm;
 use App\Models\User;
 use App\Services\Helpers\DateTimeManager;
 use App\Exceptions\AlreadyExistingDbRecordException;

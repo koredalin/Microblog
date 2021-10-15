@@ -37,11 +37,11 @@ class Post
             throw new DtoValidationException('User id is not set.');
         }
         
-        if (self::TITLE_MIN_SYMBOLS > strlen($this->title) || self::TITLE_MAX_SYMBOLS < strlen($this->title)) {
+        if (self::TITLE_MIN_SYMBOLS > mb_strlen($this->title) || self::TITLE_MAX_SYMBOLS < mb_strlen($this->title)) {
             throw new DtoValidationException('Blog post title should has '.self::TITLE_MIN_SYMBOLS.' symbols min and '.self::TITLE_MAX_SYMBOLS.' symbols max.');
         }
         
-        if (self::CONTENT_MIN_SYMBOLS > strlen($this->content)) {
+        if (self::CONTENT_MIN_SYMBOLS > mb_strlen($this->content)) {
             throw new DtoValidationException('Blog post content should has '.self::CONTENT_MIN_SYMBOLS.' symbols min.');
         }
         

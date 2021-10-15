@@ -7,7 +7,7 @@ use App\Services\Repositories\Interfaces\PostRepositoryInterface;
 // Database
 use PDO;
 // Input forms
-use App\Controllers\Input\Forms\PostForm;
+use App\Models\Input\PostForm;
 // Models
 use App\Models\User;
 use App\Models\Post;

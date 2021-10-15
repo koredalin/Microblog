@@ -3,7 +3,7 @@
 namespace App\Services\Repositories\Interfaces;
 
 use App\Models\User;
-use App\Controllers\Input\Forms\SignUpForm;
+use App\Models\Input\SignUpForm;
 
 /**
  *

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\Authentication;
+namespace App\Services\User;
 
-use App\Services\Authentication\Interfaces\UserInterface;
+use App\Services\User\Interfaces\UserInterface;
 use App\Services\Repositories\Interfaces\UserRepositoryInterface;
-use App\Services\Authentication\Interfaces\JwtHandlerInterface;
-use App\Controllers\Input\Forms\SignInForm;
-use App\Controllers\Input\Forms\SignUpForm;
+use App\Services\User\Interfaces\JwtHandlerInterface;
+use App\Models\Input\SignInForm;
+use App\Models\Input\SignUpForm;
 use App\Models\User;
 use App\Exceptions\NotFoundUserException;
 use App\Exceptions\UserAuthenticationFailException;

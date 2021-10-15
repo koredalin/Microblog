@@ -3,11 +3,11 @@
 namespace App\Controllers;
 
 use App\Controllers\ApiBaseController;
-use App\Services\Authentication\Interfaces\UserInterface;
+use App\Services\User\Interfaces\UserInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use App\Controllers\Input\Forms\SignUpForm;
-use App\Controllers\Input\Forms\SignInForm;
+use App\Models\Input\SignUpForm;
+use App\Models\Input\SignInForm;
 use App\Exceptions\DtoValidationException;
 use App\Exceptions\AlreadyExistingDbRecordException;
 use App\Exceptions\NotFoundUserException;

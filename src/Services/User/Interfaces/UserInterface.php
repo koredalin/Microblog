@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\Authentication\Interfaces;
+namespace App\Services\User\Interfaces;
 
-use App\Controllers\Input\Forms\SignUpForm;
-use App\Controllers\Input\Forms\SignInForm;
+use App\Models\Input\SignUpForm;
+use App\Models\Input\SignInForm;
 use App\Models\User;
 
 /**

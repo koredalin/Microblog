@@ -15,7 +15,7 @@ define('PRODUCTION_SERVER', 'production');
 define('SERVER_ENVIRONMENT', DEVELOPMENT_SERVER);
 
 // Testing
-define('TESTING_MODE', true);
+define('TESTING_MODE', false);
 
 // Images upload folder
 DEVELOPMENT_SERVER === SERVER_ENVIRONMENT && TESTING_MODE

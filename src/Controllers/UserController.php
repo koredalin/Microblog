@@ -96,7 +96,7 @@ class UserController extends ApiBaseController
             return $this->render(['message' => $ex->getMessage()], $args, $responseStatusCode);
         }
         
-        return $this->render(['message' => 'All users data.', 'result' => $allUsers,], $args);
+        return $this->render(['message' => 'All users data.', 'resultAll' => $allUsers,], $args);
     }
     
     public function view(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
@@ -114,7 +114,7 @@ class UserController extends ApiBaseController
             return $this->render(['message' => $ex->getMessage()], $args, $responseStatusCode);
         }
         
-        return $this->render(['message' => 'Single user data.', 'result' => $user, 'user_id' => $userId,], $args);
+        return $this->render(['message' => 'Single user data.', 'resultOne' => $user, 'user_id' => $userId,], $args);
     }
     
     public function delete(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface

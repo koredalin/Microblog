@@ -3,3 +3,4 @@ vendor/
 views/cache/
 public/images/
 public/images_test/
+.php-cs-fixer.cache

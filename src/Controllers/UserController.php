@@ -56,7 +56,9 @@ class UserController extends ApiBaseController
             $signUpForm->validate();
             $author = $this->userService->register($signUpForm);
         } catch (DtoValidationException | AlreadyExistingDbRecordException | Exception $ex) {
-            $responseStatusCode = (int)$ex->getCode() > 0 ? (int)$ex->getCode() : ResponseStatuses::INTERNAL_SERVER_ERROR;
+            $responseStatusCode = (int)$ex->getCode() > 0
+                ? (int)$ex->getCode()
+                : ResponseStatuses::INTERNAL_SERVER_ERROR;
             return $this->render(['message' => $ex->getMessage()], $args, $responseStatusCode);
         }
 

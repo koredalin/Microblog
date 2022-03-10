@@ -64,8 +64,11 @@ class PostController extends ApiBaseController
             return $this->render(['message' => $ex->getMessage()], $args, $responseStatusCode);
         }
 
-        return $this->render(['message' => 'Blog post created.', 'user_id' => $user->id, 'post_id' => $post->id],
-            $args, ResponseStatuses::CREATED);
+        return $this->render(
+            ['message' => 'Blog post created.', 'user_id' => $user->id, 'post_id' => $post->id],
+            $args,
+            ResponseStatuses::CREATED
+        );
     }
 
     public function index(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface

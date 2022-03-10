@@ -30,3 +30,14 @@ https://code.tutsplus.com/tutorials/how-to-build-a-simple-rest-api-in-php--cms-3
 --- No.
 -- REST API Authentication Example in PHP – JWT Tutorial. Too complicated.
 https://codeofaninja.com/2018/09/rest-api-authentication-example-php-jwt-tutorial.html#Download_LEVEL_1_source_code
+
+How to setup Git commit hooks for PHP
+https://dev.to/bdelespierre/how-to-setup-git-commit-hooks-for-php-42d1
+
+Git remote/shared pre-commit hook - no answer
+https://stackoverflow.com/questions/3703159/git-remote-shared-pre-commit-hook
+
+Two Ways to Share Git Hooks with Your Team
+https://www.viget.com/articles/two-ways-to-share-git-hooks-with-your-team/
+Can Git hook scripts be managed along with the repository?
+https://stackoverflow.com/questions/427207/can-git-hook-scripts-be-managed-along-with-the-repository

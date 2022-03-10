@@ -13,9 +13,12 @@ use App\Controllers\Response\ResponseStatuses;
 class ApiBaseController
 {
     protected ResponseInterface $response;
-    
-    public function render(array $responseResult, array $arguments, int $status = ResponseStatuses::SUCCESS): ResponseInterface
-    {
+
+    public function render(
+        array $responseResult,
+        array $arguments,
+        int $status = ResponseStatuses::SUCCESS
+    ): ResponseInterface {
         $result = [
             'response' => $responseResult,
             'arguments' => $arguments,
@@ -24,7 +27,7 @@ class ApiBaseController
         $this->response->getBody()->write(
             \json_encode($result)
         );
-        
+
         return $this->response->withHeader('Content-Type', 'application/json')->withStatus($status);
     }
 }

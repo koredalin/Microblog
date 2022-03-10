@@ -4,12 +4,12 @@ namespace App\Controllers\Response;
 
 final class ResponseStatuses
 {
-    const SUCCESS = 200;
-    const CREATED = 201;
-    const ALREADY_REPORTED = 208;
-    const FORBIDDEN = 403;
-    const NOT_FOUND = 404;
-    const UNPROCESSABLE_ENTITY = 422;
-    const INTERNAL_SERVER_ERROR = 500;
-    const SERVICE_UNAVAILABLE = 503;
+    public const SUCCESS = 200;
+    public const CREATED = 201;
+    public const ALREADY_REPORTED = 208;
+    public const FORBIDDEN = 403;
+    public const NOT_FOUND = 404;
+    public const UNPROCESSABLE_ENTITY = 422;
+    public const INTERNAL_SERVER_ERROR = 500;
+    public const SERVICE_UNAVAILABLE = 503;
 }

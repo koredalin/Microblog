@@ -15,6 +15,7 @@ class AlreadyExistingDbRecordException extends Exception
     public function __construct(string $message = "", int $code = 0, \Throwable $previous = null)
     {
         $code = ResponseStatuses::UNPROCESSABLE_ENTITY;
+
         parent::__construct($message, $code, $previous);
     }
 }

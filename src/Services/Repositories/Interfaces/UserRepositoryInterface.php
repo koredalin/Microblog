@@ -14,10 +14,10 @@ interface UserRepositoryInterface
     public function create(SignUpForm $input): User;
     public function getById(int $id): ?User;
     public function getByEmail(string $email): ?User;
-    
+
     /**
      * Returns all the data from user table, but without password_hash column.
-     * 
+     *
      * @return array User[]
      */
     public function getAllOrderByIdPublic(): array;

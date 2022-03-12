@@ -12,7 +12,7 @@ use PDO;
 class BaseRepository
 {
     protected PDO $dbConnection;
-    
+
     public function __construct(PDO $dbConnection)
     {
         $this->dbConnection = $dbConnection;

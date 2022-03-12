@@ -24,27 +24,26 @@ class UserService implements UserInterface
     private JwtHandlerInterface $jwtHandler;
     private PostRepositoryInterface $postRepository;
     private FileInterface $fileService;
-    
+
     public function __construct(
         UserRepositoryInterface $userRepository,
         JwtHandlerInterface $jwtHandler,
         PostRepositoryInterface $postRepository,
         FileInterface $fileService
-    )
-    {
+    ) {
         $this->userRepository = $userRepository;
         $this->jwtHandler = $jwtHandler;
         $this->postRepository = $postRepository;
         $this->fileService = $fileService;
     }
-    
+
     public function register(SignUpForm $input): User
     {
         return $this->userRepository->create($input);
     }
-    
+
     /**
-     * 
+     *
      * @param SignInForm $input
      * @return string Session Authentication Token.
      */
@@ -52,29 +51,29 @@ class UserService implements UserInterface
     {
         $user = $this->userRepository->getByEmail($input->getEmail());
         if ($user === null) {
-            throw new NotFoundUserException('No user with email: '.$input->getEmail().' registered.');
+            throw new NotFoundUserException('No user with email: ' . $input->getEmail() . ' registered.');
         }
-        
+
         if (password_verify($input->getPassword(), $user->password_hash)) {
             $token = $this->jwtHandler->encodeJwtData(
                 DOMAIN,
-                array("user_id"=> $user->id),
+                array("user_id" => $user->id),
             );
 
             return $token;
         }
-        
+
         throw new UserAuthenticationFailException('Invalid JSON web token.');
     }
-    
+
     public function getById(int $id): ?User
     {
         return $this->userRepository->getById($id);
     }
-    
+
     /**
      * Returns the data for a single user, but without password_hash column.
-     * 
+     *
      * @return User
      */
     public function getByIdPublic(int $id): ?User
@@ -83,19 +82,19 @@ class UserService implements UserInterface
         if (null !== $user) {
             $user->password_hash = '';
         }
-        
+
         return $user;
     }
-    
+
     public function getAuthorByEmail(string $email): ?User
     {
         return $this->userRepository->getByEmail($email);
     }
-    
+
     /**
      * Validates that an user is logged.
      * Returns "User" object if yet logged or "null" if not.
-     * 
+     *
      * @param string $bearerToken
      * @return User|null
      */
@@ -108,27 +107,27 @@ class UserService implements UserInterface
             $user = $this->userRepository->getById($jwtData['data']->user_id);
             return $user;
         }
-        
+
         return null;
     }
-    
+
     /**
      * Returns all the data from user table, but without password_hash column.
-     * 
+     *
      * @return array User[]
      */
     public function getAllOrderByIdPublic(): array
     {
         return $this->userRepository->getAllOrderByIdPublic();
     }
-    
+
     public function delete(User $user): void
     {
         $posts = $this->postRepository->getAllByUserIdOrderById($user->id);
         foreach ($posts as $post) {
             $this->fileService->delete(IMAGES_UPLOAD_DIR, trim($post->image_file_name));
         }
-        
+
         $this->userRepository->delete($user);
     }
 }

@@ -13,24 +13,24 @@ use App\Models\Input\PostForm;
 interface PostRepositoryInterface
 {
     public function create(User $user, PostForm $input): Post;
-    
+
     public function getById(int $id): ?Post;
-    
+
     public function getByUserIdTitle(int $userId, string $title): ?Post;
-    
+
     /**
-     * 
+     *
      * @return array Post[]
      */
     public function getAllOrderById(): array;
-    
+
     /**
-     * 
+     *
      * @return array Post[]
      */
     public function getAllByUserIdOrderById(int $userId): array;
-    
+
     public function update(Post $post): Post;
-    
+
     public function delete(Post $post): void;
 }

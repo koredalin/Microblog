@@ -14,8 +14,6 @@ use App\Models\Input\SignInForm;
 use App\Models\User;
 // Exceptions
 use Exception;
-use App\Exceptions\DtoValidationException;
-use App\Exceptions\AlreadyExistingDbRecordException;
 use App\Exceptions\NotFoundUserException;
 use App\Exceptions\UserAuthenticationFailException;
 use App\Exceptions\WrongUserDeletionException;
@@ -55,7 +53,7 @@ class UserController extends ApiBaseController
             );
             $signUpForm->validate();
             $author = $this->userService->register($signUpForm);
-        } catch (DtoValidationException | AlreadyExistingDbRecordException | Exception $ex) {
+        } catch (Exception $ex) {
             $responseStatusCode = (int)$ex->getCode() > 0
                 ? (int)$ex->getCode()
                 : ResponseStatuses::INTERNAL_SERVER_ERROR;
@@ -82,10 +80,7 @@ class UserController extends ApiBaseController
             $signInForm->validate();
             $author = $this->userService->getAuthorByEmail($signInForm->getEmail());
             $jwt = $this->userService->login($signInForm);
-        } catch (
-            DtoValidationException | AlreadyExistingDbRecordException | NotFoundUserException
-            | UserAuthenticationFailException | Exception $ex
-        ) {
+        } catch (Exception $ex) {
             $responseStatusCode = (int)$ex->getCode() > 0
                 ? (int)$ex->getCode()
                 : ResponseStatuses::INTERNAL_SERVER_ERROR;
@@ -121,7 +116,7 @@ class UserController extends ApiBaseController
             if (null === $user) {
                 throw new NotFoundUserException('No user with id: ' . $userId . '.');
             }
-        } catch (NotFoundUserException | Exception $ex) {
+        } catch (Exception $ex) {
             $responseStatusCode = (int)$ex->getCode() > 0
                 ? (int)$ex->getCode()
                 : ResponseStatuses::INTERNAL_SERVER_ERROR;
@@ -143,10 +138,7 @@ class UserController extends ApiBaseController
                     . $userForDeletionId . '.');
             }
             $this->userService->delete($currentUser);
-        } catch (
-            UserAuthenticationFailException | WrongUserDeletionException | NotFoundUserException
-            | Exception $ex
-        ) {
+        } catch (Exception $ex) {
             $responseStatusCode = (int)$ex->getCode() > 0
                 ? (int)$ex->getCode()
                 : ResponseStatuses::INTERNAL_SERVER_ERROR;

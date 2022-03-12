@@ -15,7 +15,7 @@ class NotFoundPostException extends Exception
     public function __construct(string $message = "", int $code = 0, \Throwable $previous = null)
     {
         $code = ResponseStatuses::NOT_FOUND;
-
-        parent::__construct($message, $code, $previous);
+        $exceptionClass = basename(str_replace('\\', '/', get_class())) . '. ';
+        parent::__construct($exceptionClass . $message, $code, $previous);
     }
 }

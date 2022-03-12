@@ -20,5 +20,9 @@ interface FileUploadInterface
      *
      * @return string The filename of moved file
      */
-    public function moveUploadedFile(string $directory, UploadedFileInterface $uploadedFile, string $fileBaseName): string;
+    public function moveUploadedFile(
+        string $directory,
+        UploadedFileInterface $uploadedFile,
+        string $fileBaseName
+    ): string;
 }

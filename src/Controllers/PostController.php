@@ -18,13 +18,9 @@ use App\Models\Input\PostForm;
 use App\Models\User;
 // Exceptions
 use Exception;
-use App\Exceptions\DtoValidationException;
-use App\Exceptions\AlreadyExistingDbRecordException;
-use App\Exceptions\NotFoundUserException;
 use App\Exceptions\UserAuthenticationFailException;
 use App\Exceptions\NotFoundPostException;
 use App\Exceptions\FileUploadException;
-use App\Exceptions\NotDeletedFileException;
 
 /**
  * Description of AuthorController
@@ -54,10 +50,7 @@ class PostController extends ApiBaseController
             $postForm = $this->getValidatedPostForm($request);
 
             $post = $this->postService->create($user, $postForm);
-        } catch (
-            NotFoundUserException | UserAuthenticationFailException | DtoValidationException
-            | AlreadyExistingDbRecordException | FileUploadException | Exception $ex
-        ) {
+        } catch (Exception $ex) {
             $responseStatusCode = (int)$ex->getCode() > 0
                 ? (int)$ex->getCode()
                 : ResponseStatuses::INTERNAL_SERVER_ERROR;
@@ -97,7 +90,7 @@ class PostController extends ApiBaseController
             if (null === $post) {
                 throw new NotFoundPostException('No blog post with id: ' . $postId . '.');
             }
-        } catch (NotFoundPostException | Exception $ex) {
+        } catch (Exception $ex) {
             $responseStatusCode = (int)$ex->getCode() > 0
                 ? (int)$ex->getCode()
                 : ResponseStatuses::INTERNAL_SERVER_ERROR;
@@ -120,12 +113,8 @@ class PostController extends ApiBaseController
                 throw new NotFoundPostException('No blog post with id: ' . $postId . '.');
             }
 
-            $updatedPost = $this->postService->update($user, $postForm, $post);
-        } catch (
-            NotFoundUserException | UserAuthenticationFailException | DtoValidationException
-            | NotFoundPostException | AlreadyExistingDbRecordException | FileUploadException
-            | \InvalidArgumentException | \RuntimeException | Exception $ex
-        ) {
+            $updatedPost = $this->postService->update($postForm, $post);
+        } catch (Exception $ex) {
             $responseStatusCode = (int)$ex->getCode() > 0
                 ? (int)$ex->getCode()
                 : ResponseStatuses::INTERNAL_SERVER_ERROR;
@@ -144,11 +133,7 @@ class PostController extends ApiBaseController
             $user = $this->getAuthenticatedUser($request);
             $postId = isset($args['id']) ? (int)$args['id'] : 0;
             $this->postService->delete($postId);
-        } catch (
-            NotFoundUserException | UserAuthenticationFailException | AlreadyExistingDbRecordException
-            | FileUploadException | NotDeletedFileException | \InvalidArgumentException | \RuntimeException
-            | Exception $ex
-        ) {
+        } catch (Exception $ex) {
             $responseStatusCode = (int)$ex->getCode() > 0
                 ? (int)$ex->getCode()
                 : ResponseStatuses::INTERNAL_SERVER_ERROR;

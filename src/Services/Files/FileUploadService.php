@@ -22,10 +22,13 @@ class FileUploadService implements FileUploadInterface
      *
      * @return string The filename of moved file
      */
-    public function moveUploadedFile(string $directory, UploadedFileInterface $uploadedFile, string $fileBaseName): string
-    {
+    public function moveUploadedFile(
+        string $directory,
+        UploadedFileInterface $uploadedFile,
+        string $fileBaseName
+    ): string {
         $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
-        $fileName = $fileBaseName.'.'.$extension;
+        $fileName = $fileBaseName . '.' . $extension;
         $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $fileName);
 
         return $fileName;

@@ -13,14 +13,14 @@ use App\Exceptions\NotDeletedFileException;
 class FileService implements FileInterface
 {
     /**
-     * 
+     *
      * @param string $directory
      * @param string $fileFullName
      * @return void
      */
     public function delete(string $directory, string $fileFullName): void
     {
-        $filePath = trim($directory.DIRECTORY_SEPARATOR.$fileFullName);
+        $filePath = trim($directory . DIRECTORY_SEPARATOR . $fileFullName);
         if ('' !== $filePath && file_exists($filePath) && !unlink($filePath)) {
             throw new NotDeletedFileException('Not deleted file.');
         }

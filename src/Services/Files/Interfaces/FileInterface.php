@@ -9,7 +9,7 @@ namespace App\Services\Files\Interfaces;
 interface FileInterface
 {
     /**
-     * 
+     *
      * @param string $directory
      * @param string $fileFullName
      * @return void

@@ -3,6 +3,7 @@
 namespace App\Services\Database;
 
 use PDO;
+use PDOException;
 
 /**
  * Description of Database
@@ -16,19 +17,27 @@ class Database
     private $db_name = DB_NAME;
     private $db_username = DB_USERNAME;
     private $db_password = DB_PASSWORD;
-    
+
+    /**
+     *
+     * @return PDO
+     *
+     * @SuppressWarnings(PHPMD.ExitExpression)
+     */
     public function dbConnection(): PDO
     {
-        
-        try{
-            $conn = new PDO('mysql:host='.$this->db_host.';dbname='.$this->db_name,$this->db_username,$this->db_password);
+
+        try {
+            $conn = new PDO(
+                'mysql:host=' . $this->db_host . ';dbname=' . $this->db_name,
+                $this->db_username,
+                $this->db_password
+            );
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $conn;
-        }
-        catch(PDOException $e){
-            echo "Connection error ".$e->getMessage(); 
+        } catch (PDOException $e) {
+            echo "Connection error " . $e->getMessage();
             exit;
         }
-          
     }
 }

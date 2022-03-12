@@ -15,7 +15,7 @@ class WrongUserDeletionException extends Exception
     public function __construct(string $message = "", int $code = 0, \Throwable $previous = null)
     {
         $code = ResponseStatuses::FORBIDDEN;
-
-        parent::__construct($message, $code, $previous);
+        $exceptionClass = basename(str_replace('\\', '/', get_class())) . '. ';
+        parent::__construct($exceptionClass . $message, $code, $previous);
     }
 }

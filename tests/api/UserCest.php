@@ -6,7 +6,7 @@ class UserCest
 {
     /**
      * If There is a user with such email.. He will be deleted.
-     * 
+     *
      * @param ApiTester $I
      */
     public function _before(ApiTester $I)
@@ -20,8 +20,8 @@ class UserCest
         $responseArr = \json_decode($I->grabResponse(), true);
         if (isset($responseArr['response']['user_id']) && (int)$responseArr['response']['user_id'] > 0) {
             $I->haveHttpHeader('content-type', 'application/json');
-            $I->haveHttpHeader('Authorization', 'Bearer '.$responseArr['response']['jwt']);
-            $I->sendDelete('/v1/user/'.(int)$responseArr['response']['user_id']);
+            $I->haveHttpHeader('Authorization', 'Bearer ' . $responseArr['response']['jwt']);
+            $I->sendDelete('/v1/user/' . (int)$responseArr['response']['user_id']);
             $I->seeResponseCodeIs(HttpCode::OK);
             $I->seeResponseIsJson();
             $I->seeResponseContains('"message":"User deleted."');
@@ -30,7 +30,7 @@ class UserCest
 
     /**
      * Creates a new user and review his data.
-     * 
+     *
      * @param ApiTester $I
      */
     public function userRegistrationViewTest(ApiTester $I)
@@ -50,7 +50,7 @@ class UserCest
         $responseArr = \json_decode($I->grabResponse(), true);
         if (isset($responseArr['response']['user_id']) && (int)$responseArr['response']['user_id'] > 0) {
             $I->haveHttpHeader('content-type', 'application/json');
-            $I->sendGet('/v1/user/'.(int)$responseArr['response']['user_id']);
+            $I->sendGet('/v1/user/' . (int)$responseArr['response']['user_id']);
             $I->seeResponseCodeIs(HttpCode::OK);
             $I->seeResponseIsJson();
             $I->seeResponseContains('"message":"Single user data."');
